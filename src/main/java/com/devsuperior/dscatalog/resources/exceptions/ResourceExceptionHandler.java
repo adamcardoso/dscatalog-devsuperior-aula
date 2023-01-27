@@ -1,6 +1,6 @@
 package com.devsuperior.dscatalog.resources.exceptions;
 
-import com.devsuperior.dscatalog.services.expections.EntityNotFoundException;
+import com.devsuperior.dscatalog.services.expections.ResourceNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,8 +12,8 @@ import java.time.Instant;
 @ControllerAdvice
 public class ResourceExceptionHandler {
 
-    @ExceptionHandler(EntityNotFoundException.class) // This annotation is used to indicate that this method is a handler of exceptions
-    public ResponseEntity<StandardError> entityNotFound(EntityNotFoundException e, HttpServletRequest request){
+    @ExceptionHandler(ResourceNotFoundException.class) // This annotation is used to indicate that this method is a handler of exceptions
+    public ResponseEntity<StandardError> entityNotFound(ResourceNotFoundException e, HttpServletRequest request){
         StandardError err = new StandardError();
 
         err.setTimestamp(Instant.now()); // Instant is a type that represents a moment in time
