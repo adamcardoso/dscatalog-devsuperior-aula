@@ -6,7 +6,6 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -55,8 +54,8 @@ public class ProductDTO implements Serializable {
         this.date = entity.getDate();
     }
 
-    public ProductDTO(Product entity, Set<Category> categoriesDTO) { // Constructor with categories
+    public ProductDTO(Product entity, Set<Category> categories) { // Constructor with categories
         this(entity);
-        categoriesDTO.forEach(cat -> this.categoriesDTO.add(new CategoryDTO(cat)));  // Add all categories to the list
+        categories.forEach(cat -> this.categoriesDTO.add(new CategoryDTO(cat)));  // Add all categories to the list
     }
 }
