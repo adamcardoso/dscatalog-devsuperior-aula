@@ -12,7 +12,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +25,8 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true) // This annotation is used to indicate that the method is a transactional method
-    public Page<CategoryDTO> findALlPaged(PageRequest pageRequest) {
-        Page<Category> list = categoryRepository.findAll(pageRequest);
+    public Page<CategoryDTO> findALlPaged(Pageable pageable) {
+        Page<Category> list = categoryRepository.findAll(pageable);
 
         return list.map(CategoryDTO::new);
     }

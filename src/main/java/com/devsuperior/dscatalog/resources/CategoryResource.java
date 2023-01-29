@@ -4,8 +4,7 @@ import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.services.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -21,15 +20,8 @@ public class CategoryResource {
 
     // creating the first end point
     @GetMapping // This annotation is used to indicate that this method is a GET method
-    public ResponseEntity<Page<CategoryDTO>> findAll(
-            @RequestParam(value = "page", defaultValue = "0") Integer page,
-            @RequestParam(value = "linesPerPage", defaultValue = "12") Integer linesPerPage,
-            @RequestParam(value = "direction", defaultValue = "ASC") String direction,
-            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy){  // ResponseEntity is a type that allows to return responses from web services
-
-        PageRequest pageRequest = PageRequest.of(page, linesPerPage, Sort.Direction.valueOf(direction), orderBy); // creating a page request
-
-        Page<CategoryDTO> list = categoryService.findALlPaged(pageRequest); // calling the findAll method from the service
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable){  // ResponseEntity is a type that allows to return responses from web services
+        Page<CategoryDTO> list = categoryService.findALlPaged(pageable); // calling the findAll method from the service
 
         return ResponseEntity.ok().body(list); // returning the list of categories
     }
