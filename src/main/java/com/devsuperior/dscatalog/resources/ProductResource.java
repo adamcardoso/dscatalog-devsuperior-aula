@@ -22,7 +22,7 @@ public class ProductResource {
     // creating the first end point
     @GetMapping // This annotation is used to indicate that this method is a GET method
     public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable){  // ResponseEntity is a type that allows to return responses from web services
-        Page<ProductDTO> list = productService.findALlPaged(pageable); // calling the findAll method from the service
+        Page<ProductDTO> list = productService.findAllPaged(pageable); // calling the findAll method from the service
 
         return ResponseEntity.ok().body(list); // returning the list of categories
     }

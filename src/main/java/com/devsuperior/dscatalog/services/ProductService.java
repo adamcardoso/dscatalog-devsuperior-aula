@@ -31,7 +31,7 @@ public class ProductService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true) // This annotation is used to indicate that the method is a transactional method
-    public Page<ProductDTO> findALlPaged(Pageable pageable) {
+    public Page<ProductDTO> findAllPaged(Pageable pageable) {
         Page<Product> list = productRepository.findAll(pageable);
 
         return list.map(ProductDTO::new);
