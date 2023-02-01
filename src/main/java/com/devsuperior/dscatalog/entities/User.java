@@ -1,5 +1,6 @@
 package com.devsuperior.dscatalog.entities;
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,11 +13,14 @@ import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@Table(name = "tb_user")
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Getter
-    @Setter
-    private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter private Long id;
 
     @Getter @Setter
     private String firstName;
@@ -31,6 +35,10 @@ public class User implements Serializable {
     private String password;
 
     @Getter
+    @ManyToMany
+    @JoinTable(name = "tb_user_role",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
     @Override

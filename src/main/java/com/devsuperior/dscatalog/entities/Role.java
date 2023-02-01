@@ -1,6 +1,7 @@
 package com.devsuperior.dscatalog.entities;
 
 
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,10 +12,14 @@ import java.util.Objects;
 
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
+@Table(name = "tb_role")
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
-    @Getter @Setter
-    private Long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Getter @Setter private Long id;
     @Getter @Setter
     private String authority;
 

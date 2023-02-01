@@ -24,6 +24,7 @@ public class Category implements Serializable {
     @ManyToMany(mappedBy = "categories")
     @Getter Set<Product> products = new HashSet<>();
 
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
