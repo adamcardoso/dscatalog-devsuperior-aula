@@ -5,7 +5,7 @@ package com.devsuperior.dscatalog.services;
 import java.util.Optional;
 
 import com.devsuperior.dscatalog.dto.RoleDTO;
-import com.devsuperior.dscatalog.entities.Role;
+import com.devsuperior.dscatalog.dto.UserInsertDTO;
 import com.devsuperior.dscatalog.repositories.RoleRepository;
 import com.devsuperior.dscatalog.services.expections.DatabaseException;
 import com.devsuperior.dscatalog.services.expections.ResourceNotFoundException;
@@ -15,6 +15,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +25,9 @@ import com.devsuperior.dscatalog.repositories.UserRepository;
 
 @Service //Service is a component that is used to implement business rules
 public class UserService {
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -46,9 +50,12 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO insert(UserDTO userDTO) {
+    public UserDTO insert(UserInsertDTO userInsertDTO) {
         User entity = new User();
-        copyDtoToEntity(userDTO, entity);
+
+        copyDtoToEntity(userInsertDTO, entity);
+        entity.setPassword(passwordEncoder.encode(userInsertDTO.getPassword())); //encrypting the password
+
         entity = userRepository.save(entity);
 
         return new UserDTO(entity);
