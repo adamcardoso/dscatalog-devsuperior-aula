@@ -5,7 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,6 +20,9 @@ public class Category implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // This annotation is used to indicate that the primary key is auto-increment
     @Getter @Setter private Long id;
     @Getter @Setter private String name;
+
+    @ManyToMany(mappedBy = "categories")
+    @Getter Set<Product> products = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
