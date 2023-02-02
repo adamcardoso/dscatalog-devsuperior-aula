@@ -28,6 +28,7 @@ public class User implements Serializable {
     @Getter @Setter
     private String lastName;
 
+    @Column(unique = true)
     @Getter @Setter
     private String email;
 
