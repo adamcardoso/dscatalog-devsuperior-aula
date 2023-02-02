@@ -6,6 +6,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,12 +26,19 @@ public class ProductDTO implements Serializable {
     @Getter
     @Setter
     private Long id;
+    @Size(min = 3, max = 60, message = "The size must be between 5 and 60 characters")
+    @NotEmpty(message = "Can't be empty")
     @Getter @Setter private String name;
 
+    @NotBlank(message = "Can't be empty")
     @Column(columnDefinition = "TEXT")
     @Getter @Setter private String description;
+
+    @Positive(message = "The price must be a positive value")
     @Getter @Setter private Double price;
     @Getter @Setter private String imgUrl;
+
+    @PastOrPresent(message = "The date can't be in the future")
     @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
     @Getter @Setter private Instant date;
 

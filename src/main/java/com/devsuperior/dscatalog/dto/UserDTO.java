@@ -1,9 +1,8 @@
 package com.devsuperior.dscatalog.dto;
 
 import com.devsuperior.dscatalog.entities.User;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,12 +18,14 @@ public class UserDTO implements Serializable {
     private static final long serialVersionUID = 1L;
     @Getter @Setter private Long id;
 
+    @NotBlank(message = "Can't be empty")
     @Getter @Setter
     private String firstName;
 
     @Getter @Setter
     private String lastName;
 
+    @Email(message = "Invalid email")
     @Getter @Setter
     private String email;
 
