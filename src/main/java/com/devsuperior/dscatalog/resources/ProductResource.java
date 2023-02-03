@@ -1,9 +1,7 @@
 package com.devsuperior.dscatalog.resources;
 
-
 import com.devsuperior.dscatalog.dto.ProductDTO;
 import com.devsuperior.dscatalog.services.ProductService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,50 +9,45 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.validation.Valid;
 import java.net.URI;
 
-@RestController // This annotation is used to indicate that this class is a REST controller
-@RequestMapping(value = "/products") // This annotation is used to indicate the route of the resource
+@RestController
+@RequestMapping(value = "/products")
 public class ProductResource {
 
     @Autowired
-    private ProductService productService;
+    private ProductService service;
 
-    // creating the first end point
-    @GetMapping // This annotation is used to indicate that this method is a GET method
-    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable){  // ResponseEntity is a type that allows to return responses from web services
-        Page<ProductDTO> list = productService.findAllPaged(pageable); // calling the findAll method from the service
-
-        return ResponseEntity.ok().body(list); // returning the list of categories
+    @GetMapping
+    public ResponseEntity<Page<ProductDTO>> findAll(Pageable pageable) {
+        Page<ProductDTO> list = service.findAllPaged(pageable);
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ProductDTO> findById(@PathVariable Long id){
-        ProductDTO dto = productService.findById(id);
-
+    public ResponseEntity<ProductDTO> findById(@PathVariable Long id) {
+        ProductDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO productDTO){
-        productDTO = productService.insert(productDTO);
+    public ResponseEntity<ProductDTO> insert(@Valid @RequestBody ProductDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(productDTO.getId()).toUri(); // This line is used to return the URI of the new resource created
-
-        return ResponseEntity.created(uri).body(productDTO); // returning the list of categories
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public  ResponseEntity<ProductDTO> update(@Valid @PathVariable Long id, @RequestBody ProductDTO productDTO){
-        productDTO = productService.update(id, productDTO);
-
-        return ResponseEntity.ok().body(productDTO);
+    public ResponseEntity<ProductDTO> update(@PathVariable Long id, @Valid @RequestBody ProductDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        productService.delete(id);
-
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -11,48 +11,42 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 
-@RestController // This annotation is used to indicate that this class is a REST controller
-@RequestMapping(value = "/categories") // This annotation is used to indicate the route of the resource
+@RestController
+@RequestMapping(value = "/categories")
 public class CategoryResource {
 
     @Autowired
-    private CategoryService categoryService;
+    private CategoryService service;
 
-    // creating the first end point
-    @GetMapping // This annotation is used to indicate that this method is a GET method
-    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable){  // ResponseEntity is a type that allows to return responses from web services
-        Page<CategoryDTO> list = categoryService.findALlPaged(pageable); // calling the findAll method from the service
-
-        return ResponseEntity.ok().body(list); // returning the list of categories
+    @GetMapping
+    public ResponseEntity<Page<CategoryDTO>> findAll(Pageable pageable) {
+        Page<CategoryDTO> list = service.findAllPaged(pageable);
+        return ResponseEntity.ok().body(list);
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id){
-        CategoryDTO dto = categoryService.findById(id);
-
+    public ResponseEntity<CategoryDTO> findById(@PathVariable Long id) {
+        CategoryDTO dto = service.findById(id);
         return ResponseEntity.ok().body(dto);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO categoryDTO){
-        categoryDTO = categoryService.insert(categoryDTO);
+    public ResponseEntity<CategoryDTO> insert(@RequestBody CategoryDTO dto) {
+        dto = service.insert(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(categoryDTO.getId()).toUri(); // This line is used to return the URI of the new resource created
-
-        return ResponseEntity.created(uri).body(categoryDTO); // returning the list of categories
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
     }
 
     @PutMapping(value = "/{id}")
-    public  ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
-        categoryDTO = categoryService.update(id, categoryDTO);
-
-        return ResponseEntity.ok().body(categoryDTO);
+    public ResponseEntity<CategoryDTO> update(@PathVariable Long id, @RequestBody CategoryDTO dto) {
+        dto = service.update(id, dto);
+        return ResponseEntity.ok().body(dto);
     }
 
     @DeleteMapping(value = "/{id}")
-    public ResponseEntity<Void> delete(@PathVariable Long id){
-        categoryService.delete(id);
-
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        service.delete(id);
         return ResponseEntity.noContent().build();
     }
 }

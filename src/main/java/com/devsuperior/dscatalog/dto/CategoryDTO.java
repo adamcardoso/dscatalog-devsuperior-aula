@@ -1,23 +1,41 @@
 package com.devsuperior.dscatalog.dto;
 
 import com.devsuperior.dscatalog.entities.Category;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.io.Serializable;
 
-@AllArgsConstructor
-@NoArgsConstructor
 public class CategoryDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
-    @Getter @Setter private Long id;
-    @Getter @Setter private String name;
+    private Long id;
+    private String name;
+
+    public CategoryDTO() {
+    }
+
+    public CategoryDTO(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
 
     public CategoryDTO(Category entity) {
-        id = entity.getId();
-        name = entity.getName();
+        this.id = entity.getId();
+        this.name = entity.getName();
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

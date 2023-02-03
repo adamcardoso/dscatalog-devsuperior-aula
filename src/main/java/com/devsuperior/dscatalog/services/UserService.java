@@ -1,17 +1,15 @@
 package com.devsuperior.dscatalog.services;
 
 
-
-import java.util.Objects;
-import java.util.Optional;
-
 import com.devsuperior.dscatalog.dto.RoleDTO;
+import com.devsuperior.dscatalog.dto.UserDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
 import com.devsuperior.dscatalog.dto.UserUpdateDTO;
+import com.devsuperior.dscatalog.entities.User;
 import com.devsuperior.dscatalog.repositories.RoleRepository;
-import com.devsuperior.dscatalog.services.expections.DatabaseException;
-import com.devsuperior.dscatalog.services.expections.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import com.devsuperior.dscatalog.repositories.UserRepository;
+import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,9 +24,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.devsuperior.dscatalog.dto.UserDTO;
-import com.devsuperior.dscatalog.entities.User;
-import com.devsuperior.dscatalog.repositories.UserRepository;
+import javax.persistence.EntityNotFoundException;
+import java.util.Objects;
+import java.util.Optional;
 
 @Service //Service is a component that is used to implement business rules
 public class UserService implements UserDetailsService {

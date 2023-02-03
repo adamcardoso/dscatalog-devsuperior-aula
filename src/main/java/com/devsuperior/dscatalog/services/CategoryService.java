@@ -3,19 +3,17 @@ package com.devsuperior.dscatalog.services;
 import com.devsuperior.dscatalog.dto.CategoryDTO;
 import com.devsuperior.dscatalog.entities.Category;
 import com.devsuperior.dscatalog.repositories.CategoryRepository;
-
-import com.devsuperior.dscatalog.services.expections.DatabaseException;
-import com.devsuperior.dscatalog.services.expections.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
+import com.devsuperior.dscatalog.services.exceptions.DatabaseException;
+import com.devsuperior.dscatalog.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service //Service is a component that is used to implement business rules
@@ -25,7 +23,7 @@ public class CategoryService {
     private CategoryRepository categoryRepository;
 
     @Transactional(readOnly = true) // This annotation is used to indicate that the method is a transactional method
-    public Page<CategoryDTO> findALlPaged(Pageable pageable) {
+    public Page<CategoryDTO> findAllPaged(Pageable pageable) {
         Page<Category> list = categoryRepository.findAll(pageable);
 
         return list.map(CategoryDTO::new);
