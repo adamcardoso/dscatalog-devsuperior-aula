@@ -6,6 +6,7 @@ import java.util.Optional;
 
 import com.devsuperior.dscatalog.dto.RoleDTO;
 import com.devsuperior.dscatalog.dto.UserInsertDTO;
+import com.devsuperior.dscatalog.dto.UserUpdateDTO;
 import com.devsuperior.dscatalog.repositories.RoleRepository;
 import com.devsuperior.dscatalog.services.expections.DatabaseException;
 import com.devsuperior.dscatalog.services.expections.ResourceNotFoundException;
@@ -62,7 +63,7 @@ public class UserService {
     }
 
     @Transactional
-    public UserDTO update(Long id, UserDTO userDTO) {
+    public UserDTO update(Long id, UserUpdateDTO userDTO) {
         try {
             Optional<User> optionalEntity = userRepository.findById(id);
             if(optionalEntity.isPresent()) {
